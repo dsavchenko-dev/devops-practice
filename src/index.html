@@ -1,10 +1,417 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
-    <title>DevOps Practice</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dmytro — DevOps Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161d;
+    --border: #1e2330;
+    --green: #00e5a0;
+    --green-dim: #00b37d;
+    --blue: #4f9cf9;
+    --amber: #f0a832;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-display: 'Syne', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 680px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px;
+    background: #0a0c10;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red    { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green  { background: #28c840; }
+
+  .terminal-title {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .body {
+    padding: 2.5rem 2rem;
+  }
+
+  .prompt-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+    opacity: 0;
+  }
+
+  .prompt-symbol {
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .prompt-cmd {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .prompt-cmd span { color: var(--blue); }
+
+  .cursor {
+    width: 8px;
+    height: 16px;
+    background: var(--green);
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+    border-radius: 1px;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .header {
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+    opacity: 0;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 30%, var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  .role {
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .role::before {
+    content: '# ';
+    color: var(--muted);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.5rem 0;
+    animation: fadeUp 0.6s 0.25s ease both;
+    opacity: 0;
+  }
+
+  .section {
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+    opacity: 0;
+  }
+
+  .section-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '// ';
+    color: var(--border);
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border: 1px solid;
+    transition: transform 0.15s ease, background 0.15s ease;
+    cursor: default;
+  }
+
+  .tag:hover { transform: translateY(-2px); }
+
+  .tag-green  { background: rgba(0,229,160,0.08); border-color: rgba(0,229,160,0.25); color: var(--green); }
+  .tag-blue   { background: rgba(79,156,249,0.08); border-color: rgba(79,156,249,0.25); color: var(--blue); }
+  .tag-amber  { background: rgba(240,168,50,0.08); border-color: rgba(240,168,50,0.25); color: var(--amber); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    animation: fadeUp 0.6s 0.35s ease both;
+    opacity: 0;
+  }
+
+  .stat {
+    background: #0a0c10;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: fadeUp 0.6s 0.4s ease both;
+    opacity: 0;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .contact-item:hover { color: var(--text); }
+
+  .contact-key {
+    color: var(--blue);
+    min-width: 80px;
+    font-size: 12px;
+  }
+
+  .contact-val {
+    color: var(--green);
+  }
+
+  .footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeUp 0.6s 0.45s ease both;
+    opacity: 0;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    display: inline-block;
+    margin-right: 6px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,229,160,0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(0,229,160,0); }
+  }
+
+  @media (max-width: 480px) {
+    .body { padding: 1.5rem 1.25rem; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
 </head>
 <body>
-    <h1>Hello from CI/CD pipeline!</h1>
-    <p>Версія: 1.0</p>
+
+<div class="noise"></div>
+<div class="grid-bg"></div>
+
+<div class="card">
+  <div class="terminal-bar">
+    <div class="dot dot-red"></div>
+    <div class="dot dot-yellow"></div>
+    <div class="dot dot-green"></div>
+    <span class="terminal-title">dmytro@devops ~ bash</span>
+  </div>
+
+  <div class="body">
+
+    <div class="prompt-line">
+      <span class="prompt-symbol">❯</span>
+      <span class="prompt-cmd">whoami <span>--verbose</span></span>
+      <span class="cursor"></span>
+    </div>
+
+    <div class="header">
+      <div class="name">Dmytro</div>
+      <div class="role">DevOps &amp; Systems Engineer</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Infrastructure</div>
+      <div class="skills">
+        <span class="tag tag-green">Linux</span>
+        <span class="tag tag-green">Nginx</span>
+        <span class="tag tag-green">Docker</span>
+        <span class="tag tag-green">Ansible</span>
+        <span class="tag tag-green">Bash</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Monitoring</div>
+      <div class="skills">
+        <span class="tag tag-blue">Zabbix</span>
+        <span class="tag tag-blue">Prometheus</span>
+        <span class="tag tag-blue">Grafana</span>
+        <span class="tag tag-blue">Nagios</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">CI/CD &amp; Cloud</div>
+      <div class="skills">
+        <span class="tag tag-amber">GitHub Actions</span>
+        <span class="tag tag-amber">GitLab CI</span>
+        <span class="tag tag-amber">CI/CD Pipelines</span>
+      </div>
+    </div>
+
+    <div class="divider" style="animation-delay: 0.3s;"></div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">років досвіду</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">серверів</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">uptime focus</div>
+      </div>
+    </div>
+
+    <div class="divider" style="animation-delay: 0.35s;"></div>
+
+    <div class="contact">
+      <a class="contact-item" href="https://github.com/Dima-and-Dima">
+        <span class="contact-key">github</span>
+        <span>→</span>
+        <span class="contact-val">github.com/Dima-and-Dima</span>
+      </a>
+      <a class="contact-item" href="mailto:your@email.com">
+        <span class="contact-key">email</span>
+        <span>→</span>
+        <span class="contact-val">your@email.com</span>
+      </a>
+      <a class="contact-item" href="#">
+        <span class="contact-key">telegram</span>
+        <span>→</span>
+        <span class="contact-val">@your_handle</span>
+      </a>
+    </div>
+
+    <div class="footer">
+      <span><span class="status-dot"></span>Available for hire</span>
+      <span>Ukraine 🇺🇦</span>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>
