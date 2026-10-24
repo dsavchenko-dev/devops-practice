@@ -1,0 +1,15 @@
+---
+- name: Base packages for lab
+  hosts: lab
+  become: true
+
+  tasks:
+    - name: Base tools are installed
+      ansible.builtin.apt:
+        name:
+          - htop
+          - curl
+          - tree
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
