@@ -1,0 +1,24 @@
+# Особисті нотатки — поки не публікуємо (D-005)
+docs/
+
+# Токени, паролі, ключі — НІКОЛИ в Git
+.secrets/
+
+# Локальні інструменти (D-002)
+bin/
+.venv/
+
+# Terraform — state і змінні можуть містити секрети
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+
+# Ansible
+*.retry
+.vault_pass*
+
+# Особисті налаштування Claude
+CLAUDE.local.md
+.claude/settings.local.json
