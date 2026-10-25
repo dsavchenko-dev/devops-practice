@@ -1,0 +1,12 @@
+---
+- name: Update packages for lab
+  hosts: lab
+  become: true
+
+  tasks:
+    - name: All packages are up to date
+      ansible.builtin.apt:
+        upgrade: dist
+        autoremove: true
+        update_cache: true
+        cache_valid_time: 3600
