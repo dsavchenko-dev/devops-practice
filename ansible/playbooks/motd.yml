@@ -6,7 +6,7 @@
   tasks:
     - name: Copy inline content to motd
       ansible.builtin.copy:
-        content: 'Lab: managed by Ansible'
+        content: 'Lab: managed by Ansible v2'
         dest: /etc/motd
         mode: "0644"
       notify: Show motd changed
