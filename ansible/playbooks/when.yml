@@ -1,0 +1,17 @@
+---
+- name: Basic conditionals with when
+  hosts: lab
+
+  tasks:
+    - name: Debian OS
+      ansible.builtin.debug:
+        msg: "OS = Debian"
+      when: ansible_facts['distribution'] == 'Debian'
+    - name: Ubuntu OS
+      ansible.builtin.debug:
+        msg: "OS = Ubuntu"
+      when: ansible_facts['distribution'] == 'Ubuntu'
+    - name: Version check
+      ansible.builtin.debug:
+        msg: "Version >= 25.10"
+      when: ansible_facts['distribution_version'] is version('25.10', '>=')
