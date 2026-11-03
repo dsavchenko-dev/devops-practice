@@ -1,0 +1,17 @@
+---
+- name: Copy content
+  hosts: lab
+  become: true
+
+  tasks:
+    - name: Copy inline content to motd
+      ansible.builtin.copy:
+        content: 'Lab: managed by Ansible'
+        dest: /etc/motd
+        mode: "0644"
+      notify: Show motd changed
+
+  handlers:
+    - name: Show motd changed
+      ansible.builtin.debug:
+        msg: "Show motd changed"
