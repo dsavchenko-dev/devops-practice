@@ -1,28 +1,38 @@
-name: Deploy to Server
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEVOPS_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.DEVOPS_HOST }} >> ~/.ssh/known_hosts
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
-      - name: Deploy via rsync
-        run: |
-          rsync -avzr --delete \
-            -e "ssh -i ~/.ssh/id_ed25519" \
-            src/ \
-            ${{ secrets.DEVOPS_USER }}@${{ secrets.DEVOPS_HOST }}:/home/dmytro-devops/htdocs/dmytro-devops.duckdns.org/
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: src
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
