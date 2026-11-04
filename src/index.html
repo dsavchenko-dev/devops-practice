@@ -1,395 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dmytro Savchenko — Infrastructure & DevOps Engineer</title>
-<meta name="description" content="Infrastructure & DevOps Engineer. Reliability, automation and AI integration. AWS, GCP, Ansible, Docker Swarm, cross-DC Disaster Recovery. Open to remote roles.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="Infrastructure & DevOps Engineer. AWS, GCP, Terraform, Ansible, Docker Swarm, cross-DC Disaster Recovery. Open to remote roles.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #fbfaf6;
-    --paper: #ffffff;
-    --ink: #14213d;
-    --muted: #667085;
-    --line: #e8e4d8;
-    --orange: #f97316;
-    --orange-soft: #fff1e6;
-    --teal: #0d9488;
-    --teal-soft: #e0f5f2;
-    --navy: #14213d;
-    --radius: 16px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    background: var(--bg); color: var(--ink);
-    line-height: 1.65; overflow-x: hidden;
-  }
-  h1, h2, h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.02em; }
-  a { color: inherit; text-decoration: none; }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-
-  /* soft moving blobs */
-  .blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
-  .blobs i { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5; animation: drift 18s ease-in-out infinite alternate; }
-  .blobs i:nth-child(1) { width: 420px; height: 420px; background: #ffd9b8; top: -120px; right: -80px; }
-  .blobs i:nth-child(2) { width: 380px; height: 380px; background: #bdeee8; bottom: -120px; left: -100px; animation-delay: -6s; }
-  .blobs i:nth-child(3) { width: 260px; height: 260px; background: #ffe9c7; top: 45%; left: 55%; animation-delay: -11s; }
-  @keyframes drift { to { transform: translate(60px, -40px) scale(1.15); } }
-
-  nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; font-size: 13px; }
-  nav .logo { font-weight: 600; display: flex; align-items: center; gap: 8px; }
-  nav .logo b { width: 10px; height: 10px; border-radius: 3px; background: var(--orange); animation: spin 6s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  nav ul { display: flex; gap: 22px; list-style: none; }
-  nav a { color: var(--muted); transition: color .2s; }
-  nav a:hover { color: var(--orange); }
-
-  section { padding: 56px 0; }
-  .label { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
-  h2 { font-size: clamp(26px, 4vw, 38px); margin-bottom: 26px; }
-
-  /* hero */
-  .hero { padding-top: 40px; text-align: center; }
-  .pill {
-    display: inline-flex; align-items: center; gap: 8px; font-size: 12px;
-    padding: 6px 14px; border-radius: 999px; background: var(--teal-soft); color: #0f766e;
-    border: 1px solid #a8e3db; margin-bottom: 22px;
-  }
-  .pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); animation: pulse 1.6s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(13,148,136,.55); } 100% { box-shadow: 0 0 0 10px rgba(13,148,136,0); } }
-  .hero h1 { font-size: clamp(40px, 7.5vw, 80px); line-height: 1.02; margin-bottom: 16px; }
-  .hero h1 span { color: var(--orange); }
-  .hero .sub { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
-  .hero .lead { color: var(--muted); max-width: 620px; margin: 0 auto 28px; font-size: 14px; }
-  .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn {
-    padding: 12px 22px; border-radius: 12px; font-size: 14px; font-weight: 500;
-    border: 1px solid var(--line); background: var(--paper);
-    transition: transform .2s, box-shadow .2s, border-color .2s;
-  }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(249,115,22,.18); border-color: var(--orange); }
-  .btn.primary { background: var(--navy); color: #fff; border-color: var(--navy); }
-
-  /* typed role line */
-  .typed { display: inline-block; border-right: 2px solid var(--orange); white-space: nowrap; overflow: hidden; max-width: 0; animation: type 3.2s steps(34) .4s forwards, caret 0.8s steps(1) infinite; }
-  @keyframes type { to { max-width: 100%; } }
-  @keyframes caret { 50% { border-color: transparent; } }
-
-  .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; box-shadow: 0 8px 26px rgba(20,33,61,.05); }
-  .lift { transition: transform .25s, box-shadow .25s; }
-  .lift:hover { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(249,115,22,.13); }
-
-  /* DR diagram */
-  .dr { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: center; }
-  .dr svg { width: 100%; height: auto; display: block; }
-  .dr .txt h3 { font-size: 22px; margin-bottom: 10px; }
-  .dr .txt p { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
-  .dr .txt ul { list-style: none; display: grid; gap: 8px; font-size: 13px; }
-  .dr .txt li::before { content: "▸ "; color: var(--orange); }
-  .box { fill: #fff; stroke: #d9d3c0; stroke-width: 1.5; }
-  .node { fill: var(--navy); }
-  .svgtxt { font-family: "IBM Plex Mono", monospace; font-size: 11px; fill: var(--ink); }
-  .svgtxt.w { fill: #fff; }
-  .svgtxt.m { fill: var(--muted); font-size: 10px; }
-  .path-a, .path-b { stroke: var(--orange); stroke-width: 2.5; fill: none; stroke-dasharray: 6 6; animation: dash 1s linear infinite; }
-  @keyframes dash { to { stroke-dashoffset: -12; } }
-  .path-a { animation: dash 1s linear infinite, showA 12s infinite; }
-  .path-b { animation: dash 1s linear infinite, showB 12s infinite; }
-  @keyframes showA { 0%,45% { opacity: 1; } 50%,95% { opacity: 0; } 100% { opacity: 1; } }
-  @keyframes showB { 0%,45% { opacity: 0; } 50%,95% { opacity: 1; } 100% { opacity: 0; } }
-  .st-a-on, .st-b-on { animation: showA 12s infinite; }
-  .st-a-off, .st-b-off { animation: showB 12s infinite; }
-  .st-b-on { animation-name: showB; }
-  .st-b-off { animation-name: showA; }
-  .repl { stroke: var(--teal); stroke-width: 2; stroke-dasharray: 3 5; fill: none; animation: dash 1.4s linear infinite; }
-
-  /* lifecycle */
-  .loop { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-  .loop span {
-    padding: 10px 16px; border-radius: 999px; font-size: 13px; background: var(--paper);
-    border: 1px solid var(--line); animation: glow 8s infinite;
-  }
-  .loop span:nth-child(1) { animation-delay: 0s; } .loop span:nth-child(2) { animation-delay: 1s; }
-  .loop span:nth-child(3) { animation-delay: 2s; } .loop span:nth-child(4) { animation-delay: 3s; }
-  .loop span:nth-child(5) { animation-delay: 4s; } .loop span:nth-child(6) { animation-delay: 5s; }
-  .loop span:nth-child(7) { animation-delay: 6s; } .loop span:nth-child(8) { animation-delay: 7s; }
-  @keyframes glow {
-    0%, 14% { background: var(--orange); color: #fff; border-color: var(--orange); transform: translateY(-4px); }
-    18%, 100% { background: var(--paper); color: var(--ink); border-color: var(--line); transform: none; }
-  }
-
-  /* skills */
-  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .skill h3 { font-size: 17px; margin-bottom: 14px; }
-  .skill.main { grid-column: span 2; background: linear-gradient(135deg, #fff, var(--orange-soft)); }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tag { font-size: 12px; padding: 5px 11px; border-radius: 8px; background: #f3f1ea; border: 1px solid var(--line); transition: transform .2s, background .2s; }
-  .tag.hot { background: var(--orange-soft); border-color: #fdd0ad; color: #c2410c; font-weight: 600; }
-  .tag:hover { transform: translateY(-2px) rotate(-1.5deg); }
-
-  /* numbers */
-  .nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center; }
-  .num b { display: block; font-family: "Space Grotesk", sans-serif; font-size: 44px; line-height: 1; color: var(--orange); }
-  .num span { font-size: 12px; color: var(--muted); }
-
-  /* experience */
-  .timeline { display: grid; gap: 18px; }
-  .job .when { font-size: 12px; font-weight: 600; color: var(--teal); margin-bottom: 4px; }
-  .job h3 { font-size: 19px; margin-bottom: 12px; }
-  .job ul { padding-left: 18px; color: var(--muted); font-size: 13px; display: grid; gap: 6px; }
-
-  /* projects */
-  .proj .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; }
-  .proj h3 { font-size: 18px; }
-  .status { font-size: 11px; padding: 3px 10px; border-radius: 999px; background: #fff6e0; color: #b45309; border: 1px solid #fde4a8; white-space: nowrap; }
-  .status.live { background: var(--teal-soft); color: #0f766e; border-color: #a8e3db; }
-  .proj p { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
-  .proj .go { font-size: 13px; color: var(--orange); font-weight: 600; }
-  .proj .go span { display: inline-block; transition: transform .2s; }
-  .proj:hover .go span { transform: translateX(5px); }
-
-  .contact { text-align: center; }
-  .contact .links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 34px 0 44px; }
-
-  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s, transform .7s; }
-  .reveal.in { opacity: 1; transform: none; }
-
-  @media (max-width: 860px) {
-    .dr, .grid3 { grid-template-columns: 1fr; }
-    .skill.main { grid-column: auto; }
-    .nums { grid-template-columns: repeat(2, 1fr); row-gap: 22px; }
-    nav ul { gap: 12px; font-size: 12px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .reveal { opacity: 1; transform: none; }
-    .typed { max-width: 100%; border: 0; }
-  }
-</style>
-</head>
-<body>
-
-<div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
-
+:root{--bg:#f5f8fc;--paper:#fff;--ink:#0f172a;--muted:#5b6b82;--line:#dde6f1;--or:#2563eb;--ors:#e8f0fe;--teal:#10b981;--tls:#e7f9f1;--r:16px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font:400 14px/1.65 "JetBrains Mono",ui-monospace,monospace;background:var(--bg);color:var(--ink);overflow-x:hidden}
+h1,h2,h3{font-family:"Syne",sans-serif;letter-spacing:-.02em}a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.blobs{position:fixed;inset:0;z-index:-1;overflow:hidden}.blobs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:d 18s ease-in-out infinite alternate}
+.blobs i:nth-child(1){width:420px;height:420px;background:#bcd3fb;top:-120px;right:-80px}.blobs i:nth-child(2){width:380px;height:380px;background:#a5eaf5;bottom:-120px;left:-100px;animation-delay:-6s}
+@keyframes d{to{transform:translate(40px,30px) scale(1.1)}}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:13px}nav b span{color:var(--or)}
+nav ul{display:flex;gap:20px;list-style:none;flex-wrap:wrap}nav ul a{color:var(--muted)}nav ul a:hover{color:var(--or)}
+section{padding:52px 0}.lab{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--or);margin-bottom:8px}
+h2{font-size:clamp(26px,4vw,36px);margin-bottom:10px}.sub{color:var(--muted);margin-bottom:24px;max-width:640px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:0 8px 24px rgba(15,23,42,.05)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding-top:30px}
+.badge{display:inline-flex;gap:8px;align-items:center;font-size:12px;padding:6px 14px;border-radius:99px;background:var(--tls);color:#047857;margin-bottom:18px}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:p 1.6s infinite}@keyframes p{to{box-shadow:0 0 0 10px transparent}}
+.badge i{box-shadow:0 0 0 0 rgba(16,185,129,.6)}
+.hero h1{font-size:clamp(40px,6.5vw,70px);line-height:1.03;margin-bottom:12px}.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--or),#06b6d4 55%,var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+.role{font-weight:600;color:var(--or);margin-bottom:12px}.lead{color:var(--muted);max-width:500px;margin-bottom:24px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}.btn{padding:11px 18px;border-radius:12px;border:1px solid var(--line);background:var(--paper);font:inherit;cursor:pointer;transition:.2s;color:var(--ink)}
+.btn:hover{transform:translateY(-2px);border-color:var(--or);box-shadow:0 8px 18px rgba(37,99,235,.15)}.btn.pri{background:var(--or);border-color:var(--or);color:#fff}
+.term{background:var(--ink);color:#d9e2f2;border-radius:var(--r);box-shadow:0 22px 44px rgba(15,23,42,.25);overflow:hidden;font-size:12.5px}
+.tb{display:flex;gap:7px;padding:11px 14px;background:#1b2740;align-items:center}.tb b{width:11px;height:11px;border-radius:50%}.tb b:nth-child(1){background:#ff5f57}.tb b:nth-child(2){background:#febc2e}.tb b:nth-child(3){background:#28c840}.tb span{margin-left:8px;color:#8ea0c4;font-size:11px}
+.tt{padding:14px 16px;height:230px;overflow-y:auto}.tt div{white-space:pre-wrap;word-break:break-word}.pr{color:#67e8f9}.ok{color:#5eead4}.dm{color:#8ea0c4}.er{color:#fca5a5}
+.ti{display:flex;gap:8px;padding:0 16px 14px}.ti input{flex:1;background:transparent;border:0;outline:0;color:#fff;font:inherit}
+.hint{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 14px}.hint button{background:#1b2740;border:0;color:#cbd5e8;border-radius:8px;padding:3px 9px;font:inherit;font-size:11px;cursor:pointer}.hint button:hover{background:var(--or);color:#fff}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{padding:8px 16px;border-radius:99px;border:1px solid var(--line);background:var(--paper);font:inherit;cursor:pointer;color:var(--muted);transition:.2s}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}.tab:hover:not(.on){border-color:var(--or);color:var(--or)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+pre{background:var(--ink);color:#d9e2f2;border-radius:12px;padding:16px;font-size:12px;overflow-x:auto;min-height:190px;line-height:1.55}.k{color:#67e8f9}.s{color:#5eead4}.c{color:#8ea0c4}
+.out{background:#0b1220;color:#d9e2f2;border-radius:12px;padding:16px;font-size:12px;min-height:190px;white-space:pre-wrap}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}.note{font-size:12px;color:var(--muted)}
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.rc{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);transition:.2s;cursor:default}.rc:hover{transform:translateY(-3px);border-color:var(--teal)}
+.rc b{display:block;font-family:"Syne";font-size:15px}.rc span{font-size:12px;color:var(--muted)}.rc .ic{font-size:20px}
+.tg{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line)}.sw{width:42px;height:24px;border-radius:99px;background:#cbd5e1;position:relative;cursor:pointer;border:0;transition:.2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}.sw.on{background:var(--teal)}.sw.on::after{left:21px}
+.score{font:700 40px "Syne"}.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--teal);transition:.4s;width:0}
+.dr{display:grid;grid-template-columns:1fr 90px 1fr;gap:10px;align-items:center;text-align:center}
+.dc{padding:18px;border-radius:14px;border:2px solid var(--teal);background:var(--tls);transition:.4s}.dc.dead{border-color:#ef4444;background:#fee2e2;opacity:.7}.dc b{font-family:"Syne";font-size:18px;display:block}
+.dc small{display:block;color:var(--muted)}.users{font-size:26px}.flow{height:4px;background:repeating-linear-gradient(90deg,var(--or) 0 8px,transparent 8px 16px);animation:fl .6s linear infinite}@keyframes fl{to{background-position:16px 0}}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.tag{font-size:12px;padding:4px 10px;border-radius:99px;background:var(--ors);color:#1d4ed8;transition:.2s}.tag:hover{background:var(--or);color:#fff;transform:translateY(-2px)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.g3 h3{font-size:17px}
+.job{margin-bottom:14px}.job .w{font-size:12px;color:var(--teal);font-weight:600}.job ul{margin:10px 0 0 18px;color:var(--muted);font-size:13px}
+.edu{margin-top:14px;color:var(--muted);font-size:13px}.proj{display:block;transition:.2s}.proj:hover{transform:translateY(-4px);border-color:var(--or)}.proj p{color:var(--muted);font-size:13px;margin:8px 0}
+.st{font-size:11px;padding:2px 9px;border-radius:99px;background:var(--tls);color:#047857}.go{color:var(--or);font-weight:600}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:40px 0}
+.rv{opacity:0;transform:translateY(22px);transition:.7s}.rv.in{opacity:1;transform:none}
+@media(max-width:820px){.hero,.two,.g3,.res{grid-template-columns:1fr}.dr{grid-template-columns:1fr}.flow{height:30px;width:4px;margin:auto}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="blobs"><i></i><i></i></div>
 <div class="wrap">
-  <nav>
-    <div class="logo"><b></b> dmytro.savchenko</div>
-    <ul>
-      <li><a href="#dr">Reliability</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<nav><b>dmytro<span>@</span>infra:~$</b><ul><li><a href="#iac">IaC</a></li><li><a href="#cloud">Cloud</a></li><li><a href="#dr">DR</a></li><li><a href="#skills">Skills</a></li><li><a href="#exp">Experience</a></li><li><a href="#contact">Contact</a></li></ul></nav>
 
-  <header class="hero">
-    <div class="pill"><i></i> Open to remote DevOps / Infrastructure / SRE roles</div>
-    <h1>Infrastructure &amp;<br><span>DevOps</span> Engineer</h1>
-    <p class="sub"><span class="typed">Reliability · Automation · AI Integration</span></p>
-    <p class="lead">4.5+ years building Linux infrastructure that stays up. Infrastructure as Code, CI/CD, containers, cloud (AWS, GCP) and cross-datacenter Disaster Recovery.</p>
-    <div class="btns">
-      <a class="btn primary" href="#experience">See experience</a>
-      <a class="btn" href="#projects">DevOps projects</a>
-      <a class="btn" href="mailto:savchenkod19@gmail.com">Contact me</a>
-    </div>
-  </header>
+<header class="hero">
+ <div>
+  <div class="badge"><i></i>Open to remote roles</div>
+  <h1>Dmytro<br><em>Savchenko</em></h1>
+  <p class="role">Infrastructure Engineer / DevOps Engineer</p>
+  <p class="lead">4.5+ years building Linux infrastructure that stays up. IaC, CI/CD, containers, AWS &amp; GCP and cross-datacenter Disaster Recovery. Try the terminal →</p>
+  <div class="btns"><a class="btn pri" href="#contact">Get in touch</a><a class="btn" href="#iac">Play with IaC</a></div>
+ </div>
+ <div class="term"><div class="tb"><b></b><b></b><b></b><span>interactive shell</span></div>
+  <div class="tt" id="tt"></div>
+  <div class="ti"><span class="pr">❯</span><input id="ti" autocomplete="off" spellcheck="false" placeholder="type a command..." aria-label="terminal input"></div>
+  <div class="hint" id="hint"></div></div>
+</header>
 
-  <!-- DR DIAGRAM -->
-  <section id="dr" class="reveal">
-    <div class="label">Proud project</div>
-    <h2>Cross-datacenter Disaster Recovery</h2>
-    <div class="card dr">
-      <svg viewBox="0 0 560 330" role="img" aria-label="Animated diagram: traffic fails over between two data centers while the database replicates">
-        <!-- users + edge -->
-        <rect class="node" x="215" y="8" width="130" height="34" rx="10"/>
-        <text class="svgtxt w" x="280" y="30" text-anchor="middle">Users</text>
-        <rect class="node" x="175" y="82" width="210" height="40" rx="10"/>
-        <text class="svgtxt w" x="280" y="107" text-anchor="middle">Cloudflare · HAProxy</text>
-        <line x1="280" y1="42" x2="280" y2="82" stroke="#14213d" stroke-width="2" stroke-dasharray="4 4" class="repl" style="stroke:#14213d"/>
+<section id="iac" class="rv"><div class="lab">Infrastructure as Code</div><h2>One goal, four tools</h2>
+ <p class="sub">The same task — "web server with nginx" — in each config-management / IaC tool. Pick one and hit Run.</p>
+ <div class="card"><div class="tabs" id="itabs"></div>
+  <div class="two"><pre id="icode"></pre><div class="out" id="iout">Press ▶ Run</div></div>
+  <div class="row"><span class="note" id="inote"></span><button class="btn pri" id="irun">▶ Run</button></div></div>
+</section>
 
-        <!-- traffic paths -->
-        <path class="path-a" d="M230 122 C 200 160, 150 170, 140 200"/>
-        <path class="path-b" d="M330 122 C 360 160, 410 170, 420 200"/>
+<section id="cloud" class="rv"><div class="lab">Cloud</div><h2>AWS &amp; GCP</h2>
+ <p class="sub">Switch provider and harden the storage bucket: flip the settings and watch the security score.</p>
+ <div class="card"><div class="tabs" id="ctabs"></div><div class="res" id="cres"></div>
+  <div class="two"><div><b id="bname"></b><div id="tgs"></div></div>
+   <div><div class="note">Bucket security score</div><div class="score" id="sc">0%</div><div class="bar"><i id="sb"></i></div><div class="note" id="sm"></div></div></div></div>
+</section>
 
-        <!-- DC A -->
-        <rect class="box" x="30" y="200" width="220" height="110" rx="14"/>
-        <text class="svgtxt" x="46" y="226" font-weight="600">DC 1</text>
-        <text class="svgtxt m" x="46" y="248">DB primary · VMs · Swarm</text>
-        <g class="st-a-on"><rect x="46" y="262" width="76" height="22" rx="11" fill="#e0f5f2"/><text class="svgtxt" x="84" y="277" text-anchor="middle" fill="#0f766e" style="fill:#0f766e">ACTIVE</text></g>
-        <g class="st-a-off"><rect x="46" y="262" width="76" height="22" rx="11" fill="#f3f1ea"/><text class="svgtxt m" x="84" y="277" text-anchor="middle">STANDBY</text></g>
+<section id="dr" class="rv"><div class="lab">Disaster Recovery</div><h2>Cross-DC failover</h2>
+ <p class="sub">I designed and tested a two-datacenter DR plan. Break a DC and see traffic move.</p>
+ <div class="card"><div class="dr"><div class="dc" id="d1"><b>DC-1</b><small>primary · DB master</small><span id="s1">● serving traffic</span></div>
+  <div><div class="users">👥</div><div class="flow" id="fl"></div></div>
+  <div class="dc" id="d2"><b>DC-2</b><small>standby · DB replica</small><span id="s2">● replicating</span></div></div>
+  <div class="row"><span class="note" id="dlog">All systems healthy.</span><span><button class="btn" id="kill">💥 Kill DC-1</button> <button class="btn" id="heal">♻ Restore</button></span></div></div>
+</section>
 
-        <!-- DC B -->
-        <rect class="box" x="310" y="200" width="220" height="110" rx="14"/>
-        <text class="svgtxt" x="326" y="226" font-weight="600">DC 2</text>
-        <text class="svgtxt m" x="326" y="248">DB replica · VMs · Swarm</text>
-        <g class="st-b-on"><rect x="326" y="262" width="76" height="22" rx="11" fill="#e0f5f2"/><text class="svgtxt" x="364" y="277" text-anchor="middle" style="fill:#0f766e">ACTIVE</text></g>
-        <g class="st-b-off"><rect x="326" y="262" width="76" height="22" rx="11" fill="#f3f1ea"/><text class="svgtxt m" x="364" y="277" text-anchor="middle">STANDBY</text></g>
+<section id="skills" class="rv"><div class="lab">Skills</div><h2>Toolbox</h2>
+ <div class="g3">
+  <div class="card"><h3>☁️ Cloud &amp; IaC</h3><div class="tags"><span class="tag">AWS</span><span class="tag">GCP</span><span class="tag">S3 / GCS</span><span class="tag">Terraform</span><span class="tag">Ansible</span><span class="tag">Puppet</span><span class="tag">Chef</span><span class="tag">Cloudflare</span></div></div>
+  <div class="card"><h3>🐳 Containers &amp; CI/CD</h3><div class="tags"><span class="tag">Docker</span><span class="tag">Docker Swarm</span><span class="tag">GitHub Actions</span><span class="tag">Git</span><span class="tag">Ansible Vault</span></div></div>
+  <div class="card"><h3>🌐 OS &amp; Network</h3><div class="tags"><span class="tag">Linux</span><span class="tag">TCP/IP</span><span class="tag">IPTables</span><span class="tag">WireGuard</span><span class="tag">IPsec</span><span class="tag">pfSense</span><span class="tag">SSL/TLS</span></div></div>
+  <div class="card"><h3>🔀 Web &amp; DB</h3><div class="tags"><span class="tag">Nginx</span><span class="tag">HAProxy</span><span class="tag">Apache</span><span class="tag">MariaDB</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span></div></div>
+  <div class="card"><h3>📊 Monitoring</h3><div class="tags"><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Zabbix</span><span class="tag">Nagios</span><span class="tag">ELK</span></div></div>
+  <div class="card"><h3>✉️ Email &amp; AI</h3><div class="tags"><span class="tag">Postfix</span><span class="tag">Dovecot</span><span class="tag">Zimbra</span><span class="tag">SPF/DKIM/DMARC</span><span class="tag">Claude Code</span></div></div>
+ </div>
+</section>
 
-        <!-- replication -->
-        <path id="repl" class="repl" d="M250 255 L310 255"/>
-        <circle r="4" fill="#0d9488"><animateMotion dur="1.6s" repeatCount="indefinite" path="M250 255 L310 255"/></circle>
-        <circle r="4" fill="#0d9488"><animateMotion dur="1.6s" begin="-0.8s" repeatCount="indefinite" path="M310 270 L250 270"/></circle>
-        <text class="svgtxt m" x="280" y="296" text-anchor="middle">replication</text>
-      </svg>
-      <div class="txt">
-        <h3>Failover between two data centers</h3>
-        <p>Designed, implemented and tested end to end. Traffic switches automatically while data stays in sync.</p>
-        <ul>
-          <li>Automatic database replication</li>
-          <li>VM synchronization</li>
-          <li>Tested failover between sites</li>
-          <li>Documented runbooks (3D)</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+<section id="exp" class="rv"><div class="lab">Experience</div><h2>Where I've worked</h2>
+ <div class="card job"><div class="w">Sep 2025 – Oct 2026 · Cherkasy, Ukraine</div><h3>DevOps Engineer · Requestum</h3><ul>
+  <li>Production Linux and AWS/GCP environments with high availability and fast failovers.</li>
+  <li>Cross-DC Disaster Recovery across two data centers, with automated DB replication and VM sync.</li>
+  <li>Ansible Vault secrets management for Docker Swarm; IaC with Ansible playbooks.</li>
+  <li>pfSense perimeters, VPN migration to WireGuard, HAProxy (SSL, LB) and Cloudflare rules.</li>
+  <li>AI agent tools (Claude Code) for faster troubleshooting; runbooks and network topologies.</li></ul></div>
+ <div class="card job"><div class="w">Jan 2023 – Oct 2025 · Kyiv, Ukraine (Remote)</div><h3>System Administrator · Tucha Cloud Solutions Provider</h3><ul>
+  <li>Proxmox virtualization (KVM/LXC); Nginx/HAProxy; MariaDB master-replica, PostgreSQL, Redis.</li>
+  <li>Email infrastructure (Postfix, Dovecot, Zimbra) and monitoring (Prometheus, Grafana, Zabbix, ELK).</li></ul></div>
+ <div class="card job"><div class="w">Jul 2018 – Feb 2022 · Ukraine (On-site)</div><h3>System Administrator · Merefa Central District Hospital</h3><ul>
+  <li>Hospital networks, routers, switches, firewalls; security policies for sensitive medical data.</li></ul></div>
+ <p class="edu">🎓 BA Telecommunications — National Aviation University · Linux &amp; Network Administration — PortaOne, 2022</p>
+</section>
 
-  <!-- LIFECYCLE -->
-  <section class="reveal">
-    <div class="label">How I work</div>
-    <h2>The whole DevOps lifecycle</h2>
-    <div class="loop" aria-label="DevOps lifecycle">
-      <span>Plan</span><span>Code</span><span>Build</span><span>Test</span><span>Release</span><span>Deploy</span><span>Operate</span><span>Monitor</span>
-    </div>
-  </section>
+<section id="projects" class="rv"><div class="lab">Projects</div><h2>My DevOps sandbox</h2>
+ <div class="g3">
+  <a class="card proj" href="https://github.com/dsavchenko-dev/devops-practice/tree/main/ansible" target="_blank" rel="noopener"><h3>Ansible playbooks</h3> <span class="st">In progress</span><p>Hardening, sshd drop-in config with validation, journald limits and more.</p><span class="go">Browse code →</span></a>
+  <a class="card proj" href="https://github.com/dsavchenko-dev/devops-practice/tree/main/.github/workflows" target="_blank" rel="noopener"><h3>CI/CD: GitHub Actions</h3> <span class="st">Live</span><p>This site is deployed to GitHub Pages by a workflow on every push.</p><span class="go">See workflow →</span></a>
+  <a class="card proj" href="https://github.com/dsavchenko-dev/devops-practice" target="_blank" rel="noopener"><h3>Full repository</h3> <span class="st">Open</span><p>Every commit shows what I am learning and building.</p><span class="go">Open GitHub →</span></a>
+ </div>
+</section>
 
-  <!-- NUMBERS -->
-  <section class="reveal">
-    <div class="card nums">
-      <div class="num"><b>4.5+</b><span>years of experience</span></div>
-      <div class="num"><b>2</b><span>data centers in DR setup</span></div>
-      <div class="num"><b>2</b><span>cloud platforms: AWS, GCP</span></div>
-      <div class="num"><b>100%</b><span>everything as code</span></div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="reveal">
-    <div class="label">Skills</div>
-    <h2>Tools I use</h2>
-    <div class="grid3">
-      <div class="card skill main lift">
-        <h3>☁️ Cloud &amp; Infrastructure as Code</h3>
-        <div class="tags"><span class="tag hot">AWS</span><span class="tag hot">Google Cloud</span><span class="tag hot">Ansible</span><span class="tag">Ansible Vault</span><span class="tag">Cloudflare</span><span class="tag">DNS</span><span class="tag">CDN</span><span class="tag">Load balancing</span></div>
-      </div>
-      <div class="card skill lift">
-        <h3>🔁 CI/CD</h3>
-        <div class="tags"><span class="tag hot">GitLab CI</span><span class="tag hot">GitHub Actions</span><span class="tag">Bash</span><span class="tag">Git</span></div>
-      </div>
-      <div class="card skill lift">
-        <h3>📦 Containers &amp; Virtualization</h3>
-        <div class="tags"><span class="tag hot">Docker</span><span class="tag hot">Docker Swarm</span><span class="tag">Proxmox</span><span class="tag">XCP-ng</span><span class="tag">KVM</span></div>
-      </div>
-      <div class="card skill lift">
-        <h3>🔐 Networks &amp; Security</h3>
-        <div class="tags"><span class="tag">pfSense</span><span class="tag">WireGuard</span><span class="tag">IPsec</span><span class="tag">IPTables</span><span class="tag">SSL/TLS</span><span class="tag">HAProxy</span><span class="tag">Nginx</span></div>
-      </div>
-      <div class="card skill lift">
-        <h3>🛡️ Reliability</h3>
-        <div class="tags"><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Zabbix</span><span class="tag">ELK</span><span class="tag">Disaster Recovery</span></div>
-      </div>
-      <div class="card skill lift">
-        <h3>🤖 AI integration</h3>
-        <div class="tags"><span class="tag hot">Claude Code</span><span class="tag">AI-agent workflows</span><span class="tag">Automation</span></div>
-      </div>
-      <div class="card skill lift">
-        <h3>🗄️ Data &amp; Mail</h3>
-        <div class="tags"><span class="tag">MySQL/MariaDB replication</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">Postfix</span><span class="tag">SPF/DKIM/DMARC</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" class="reveal">
-    <div class="label">Experience</div>
-    <h2>Where I've worked</h2>
-    <div class="timeline">
-      <div class="job card lift">
-        <div class="when">Sep 2025 – Oct 2026 · Cherkasy, Ukraine</div>
-        <h3>DevOps Engineer · Requestum</h3>
-        <ul>
-          <li>Built and ran production Linux infrastructure with a focus on reliability, network security and automated failover.</li>
-          <li>Designed, implemented and tested cross-DC Disaster Recovery across two data centers.</li>
-          <li>Led Ansible adoption: playbooks and roles for provisioning and deployment pipelines.</li>
-          <li>Ran multi-node Docker Swarm clusters; managed secrets with Ansible Vault.</li>
-          <li>Managed pfSense perimeters and moved VPN tunnels to WireGuard.</li>
-          <li>Used AI-agent workflows to speed up troubleshooting; kept topologies, firewall rules and recovery steps documented.</li>
-        </ul>
-      </div>
-      <div class="job card lift">
-        <div class="when">Jan 2023 – Oct 2025 · Kyiv, Ukraine (Remote)</div>
-        <h3>System Administrator · Tucha Cloud Solutions Provider</h3>
-        <ul>
-          <li>Ran enterprise virtualization on XCP-ng and Proxmox.</li>
-          <li>Managed Nginx and Apache, MariaDB/MySQL master-replica and PostgreSQL.</li>
-          <li>Operated mail servers (Postfix, Dovecot, Zimbra) with SPF, DKIM, DMARC.</li>
-          <li>Monitoring and incident response with Prometheus, Grafana, Zabbix, Nagios and ELK.</li>
-        </ul>
-      </div>
-      <div class="job card lift">
-        <div class="when">Jul 2018 – Feb 2022 · Ukraine (On-site)</div>
-        <h3>System Administrator · Merefa Central District Hospital</h3>
-        <ul>
-          <li>Designed and maintained LAN/VLAN networks, firewalls and server infrastructure.</li>
-          <li>Managed Linux/Windows servers, Active Directory, DNS, DHCP, backups.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="reveal">
-    <div class="label">Projects</div>
-    <h2>My DevOps sandbox</h2>
-    <div class="grid3">
-      <a class="card proj lift" href="https://github.com/dsavchenko-dev/devops-practice/tree/main/ansible" target="_blank" rel="noopener">
-        <div class="top"><h3>Ansible playbooks</h3><span class="status">In progress</span></div>
-        <p>Hardening, sshd drop-in config with validation, journald limits and more. New playbooks added regularly.</p>
-        <div class="go">Browse the code <span>→</span></div>
-      </a>
-      <a class="card proj lift" href="https://github.com/dsavchenko-dev/devops-practice/tree/main/.github/workflows" target="_blank" rel="noopener">
-        <div class="top"><h3>GitHub Actions</h3><span class="status live">Live</span></div>
-        <p>This site is deployed to GitHub Pages by a workflow on every push to main.</p>
-        <div class="go">See the workflow <span>→</span></div>
-      </a>
-      <a class="card proj lift" href="https://github.com/dsavchenko-dev/devops-practice" target="_blank" rel="noopener">
-        <div class="top"><h3>Full repository</h3><span class="status live">Open</span></div>
-        <p>Every commit shows what I am learning and building right now.</p>
-        <div class="go">Open on GitHub <span>→</span></div>
-      </a>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="contact reveal">
-    <div class="label">Contact</div>
-    <h2>Let's build something reliable</h2>
-    <div class="links">
-      <a class="btn primary" href="mailto:savchenkod19@gmail.com">✉️ savchenkod19@gmail.com</a>
-      <a class="btn" href="https://www.linkedin.com/in/dmytro-savchenko-devops" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/dsavchenko-dev" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <p style="margin-top:22px;color:var(--muted);font-size:13px;">Ukraine 🇺🇦 · Remote</p>
-  </section>
-
-  <footer>© <span id="year"></span> Dmytro Savchenko · Deployed with GitHub Actions</footer>
+<section id="contact" class="rv"><div class="lab">Contact</div><h2>Let's work together</h2>
+ <div class="btns"><a class="btn pri" href="mailto:savchenkod19@gmail.com">✉️ savchenkod19@gmail.com</a><a class="btn" href="https://www.linkedin.com/in/dmytro-savchenko-devops" target="_blank" rel="noopener">LinkedIn</a><a class="btn" href="https://github.com/dsavchenko-dev" target="_blank" rel="noopener">GitHub</a></div>
+ <p class="note" style="margin-top:18px">Based in Cherkasy, Ukraine 🇺🇦</p>
+</section>
+<footer>© <span id="yr"></span> Dmytro Savchenko · Deployed with GitHub Actions</footer>
 </div>
-
 <script>
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-</body>
-</html>
+var $=function(i){return document.getElementById(i)};
+// ---- terminal
+var tt=$("tt"),ti=$("ti");
+function pr(t,c){var d=document.createElement("div");if(c)d.className=c;d.textContent=t;tt.appendChild(d);tt.scrollTop=tt.scrollHeight}
+var CMD={
+help:"Commands: whoami, skills, aws s3 ls, gcloud storage ls, terraform plan, ansible-playbook site.yml, uptime, contact, clear",
+whoami:"dmytro — infrastructure & devops engineer, Cherkasy UA",
+skills:"linux · aws · gcp · terraform · ansible · puppet · chef · docker swarm · ci/cd · pfsense · wireguard",
+"aws s3 ls":"2025-03-01  dmytro-backups\n2025-05-12  dmytro-tf-state\n2025-09-30  dmytro-static-site",
+"gcloud storage ls":"gs://dmytro-dr-snapshots/\ngs://dmytro-logs-archive/",
+"terraform plan":"Plan: 3 to add, 0 to change, 0 to destroy.\n  + aws_s3_bucket.site\n  + aws_instance.web\n  + google_storage_bucket.dr",
+"ansible-playbook site.yml":"PLAY RECAP ********************\nweb1 : ok=24 changed=3 failed=0",
+uptime:"up 412 days, load average: 0.08, 0.11, 0.09",
+contact:"savchenkod19@gmail.com"};
+["help","whoami","terraform plan","aws s3 ls","ansible-playbook site.yml"].forEach(function(c){var b=document.createElement("button");b.textContent=c;b.onclick=function(){run(c)};$("hint").appendChild(b)});
+function run(v){v=v.trim();pr("❯ "+v,"pr");if(!v)return;if(v==="clear"){tt.innerHTML="";return}
+ pr(CMD[v]||"command not found: "+v+" (try help)",CMD[v]?"ok":"er")}
+ti.addEventListener("keydown",function(e){if(e.key==="Enter"){run(ti.value);ti.value=""}});
+pr("Welcome. Type help or click a command below.","dm");
+// ---- IaC tabs
+var IAC={
+Terraform:{n:"Declarative · provisions cloud resources",c:'<span class="k">resource</span> "aws_instance" "web" {\n  ami           = "ami-0abc123"\n  instance_type = "t3.micro"\n  user_data     = file("nginx.sh")\n}\n<span class="k">resource</span> "aws_s3_bucket" "site" {\n  bucket = "dmytro-static-site"\n}',o:"$ terraform apply\naws_s3_bucket.site: Creating...\naws_instance.web: Creating...\naws_instance.web: Creation complete\n\nApply complete! 2 added, 0 changed, 0 destroyed."},
+Ansible:{n:"Agentless · SSH + YAML playbooks",c:'<span class="c">- hosts: web</span>\n  become: true\n  tasks:\n    - name: Install nginx\n      <span class="k">ansible.builtin.apt:</span>\n        name: nginx\n        state: present\n    - name: Start nginx\n      <span class="k">ansible.builtin.service:</span>\n        name: nginx\n        state: started',o:"$ ansible-playbook site.yml\nTASK [Install nginx] ***\nchanged: [web1]\nTASK [Start nginx] ***\nok: [web1]\n\nPLAY RECAP: ok=3 changed=1 failed=0"},
+Puppet:{n:"Declarative · agent/master, Puppet DSL",c:'<span class="k">package</span> { "nginx":\n  ensure => installed,\n}\n<span class="k">service</span> { "nginx":\n  ensure  => running,\n  enable  => true,\n  require => Package["nginx"],\n}',o:"$ puppet agent -t\nInfo: Applying configuration\nNotice: /Stage[main]/Package[nginx]/ensure: created\nNotice: Service[nginx]/ensure: running\nNotice: Applied catalog in 4.2 seconds"},
+Chef:{n:"Imperative-ish · Ruby recipes",c:'<span class="k">package</span> "nginx" do\n  action :install\nend\n\n<span class="k">service</span> "nginx" do\n  action [:enable, :start]\nend',o:"$ chef-client\nRecipe: web::default\n  * apt_package[nginx] action install\n    - install version 1.24\n  * service[nginx] action start\n\nChef Client finished, 2/2 resources updated"}};
+var ik="Terraform";
+function iset(k){ik=k;$("icode").innerHTML=IAC[k].c;$("inote").textContent=IAC[k].n;$("iout").textContent="Press ▶ Run";
+ [].forEach.call($("itabs").children,function(b){b.className="tab"+(b.textContent===k?" on":"")})}
+Object.keys(IAC).forEach(function(k){var b=document.createElement("button");b.className="tab";b.textContent=k;b.onclick=function(){iset(k)};$("itabs").appendChild(b)});
+$("irun").onclick=function(){var l=IAC[ik].o.split("\n"),i=0,o=$("iout");o.textContent="";var t=setInterval(function(){o.textContent+=l[i++]+"\n";if(i>=l.length)clearInterval(t)},320)};
+iset("Terraform");
+// ---- cloud
+var CL={AWS:{b:"s3://dmytro-backups",t:["Versioning","Encryption (SSE-KMS)","Block Public Access","Access logging"],r:[["🪣","S3","object storage"],["🖥️","EC2","virtual servers"],["🔐","IAM","roles & policies"],["🌍","CloudFront","CDN"],["🗄️","RDS","managed DB"],["🕸️","VPC","private network"]]},
+GCP:{b:"gs://dmytro-dr-snapshots",t:["Object versioning","CMEK encryption","Public access prevention","Audit logging"],r:[["🪣","Cloud Storage","buckets"],["🖥️","Compute Engine","VMs"],["🔐","IAM","roles & policies"],["🌍","Cloud CDN","edge cache"],["🗄️","Cloud SQL","managed DB"],["🕸️","VPC","private network"]]}};
+var cp="AWS",st=[0,0,0,0];
+function cdraw(){var d=CL[cp];$("bname").textContent=d.b;
+ [].forEach.call($("ctabs").children,function(b){b.className="tab"+(b.textContent===cp?" on":"")});
+ $("cres").innerHTML=d.r.map(function(r){return '<div class="rc"><span class="ic">'+r[0]+'</span><b>'+r[1]+'</b><span>'+r[2]+'</span></div>'}).join("");
+ $("tgs").innerHTML="";d.t.forEach(function(n,i){var r=document.createElement("div");r.className="tg";r.innerHTML="<span>"+n+'</span><button class="sw'+(st[i]?" on":"")+'" aria-label="'+n+'"></button>';
+  r.lastChild.onclick=function(){st[i]=st[i]?0:1;cdraw()};$("tgs").appendChild(r)});
+ var s=st.reduce(function(a,b){return a+b},0)*25;$("sc").textContent=s+"%";$("sb").style.width=s+"%";$("sb").style.background=s<50?"#ef4444":s<100?"#f59e0b":"#10b981";
+ $("sm").textContent=s<50?"Exposed — fix this.":s<100?"Getting better.":"Hardened ✔"}
+Object.keys(CL).forEach(function(k){var b=document.createElement("button");b.className="tab";b.textContent=k;b.onclick=function(){cp=k;st=[0,0,0,0];cdraw()};$("ctabs").appendChild(b)});cdraw();
+// ---- DR
+function dr(dead){$("d1").className="dc"+(dead?" dead":"");$("s1").textContent=dead?"✖ down":"● serving traffic";
+ $("s2").textContent=dead?"▲ promoted to master, serving":"● replicating";$("d2").style.transform=dead?"scale(1.04)":"";
+ $("dlog").textContent=dead?"DC-1 down → DB replica promoted, traffic switched to DC-2. Zero manual steps.":"All systems healthy.";
+ $("fl").style.transform=dead?"scaleX(-1)":""}
+$("kill").onclick=function(){dr(1)};$("heal").onclick=function(){dr(0)};
+// ---- reveal
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll(".rv").forEach(function(e){io.observe(e)});$("yr").textContent=new Date().getFullYear();
+</script></body></html>
