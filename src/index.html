@@ -19,6 +19,14 @@ section{padding:52px 0}.lab{font-size:12px;font-weight:600;letter-spacing:.14em;
 h2{font-size:clamp(26px,4vw,36px);margin-bottom:10px}.sub{color:var(--muted);margin-bottom:24px;max-width:640px}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:0 8px 24px rgba(15,23,42,.05)}
 .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding-top:30px}
+.sun{padding:28px 30px;border-radius:24px;margin-bottom:22px;background:linear-gradient(135deg,#ffd37a 0%,#ffb454 38%,#f58f3a 72%,#d9702a 100%);background:linear-gradient(135deg,rgba(255,211,122,.55),rgba(255,180,84,.5) 40%,rgba(245,143,58,.5) 75%,rgba(217,112,42,.5));box-shadow:0 18px 40px rgba(217,112,42,.15)}.sun .lead{margin-bottom:0}.sun h1{margin-bottom:12px}
+.plw{overflow-x:auto;padding-bottom:6px}.plin{min-width:680px}
+.track{position:relative;height:6px;background:var(--line);border-radius:9px;margin:6px 0 20px}.track b{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,var(--or),var(--teal));border-radius:9px;transition:width .8s ease}
+.track i{position:absolute;top:-7px;left:0;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:var(--or);box-shadow:0 0 0 6px rgba(37,99,235,.18);transition:left .8s ease,background .3s}
+.pl{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.stg{text-align:center;padding:14px 4px;border:1px solid var(--line);border-radius:14px;background:var(--paper);cursor:pointer;transition:.3s;font:inherit;color:var(--ink)}
+.stg .ic{font-size:24px;display:block}.stg b{display:block;font:700 13px Syne;margin-top:4px}.stg small{display:block;color:var(--muted);font-size:10.5px}
+.stg:hover{border-color:var(--or)}.stg.on{border-color:var(--or);background:var(--ors);transform:translateY(-6px);box-shadow:0 12px 22px rgba(37,99,235,.15)}.stg.done{border-color:var(--teal);background:var(--tls)}.stg.bad{border-color:#ef4444;background:#fee2e2}
+.pllog{margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--ink);color:#d9e2f2;font-size:12.5px;min-height:70px;white-space:pre-wrap}
 .badge{display:inline-flex;gap:8px;align-items:center;font-size:12px;padding:6px 14px;border-radius:99px;background:var(--tls);color:#047857;margin-bottom:18px}
 .badge i{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:p 1.6s infinite}@keyframes p{to{box-shadow:0 0 0 10px transparent}}
 .badge i{box-shadow:0 0 0 0 rgba(16,185,129,.6)}
@@ -58,14 +66,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:40px 0}
 </style></head><body>
 <div class="blobs"><i></i><i></i></div>
 <div class="wrap">
-<nav><b>dmytro<span>@</span>infra:~$</b><ul><li><a href="#iac">IaC</a></li><li><a href="#cloud">Cloud</a></li><li><a href="#dr">DR</a></li><li><a href="#skills">Skills</a></li><li><a href="#exp">Experience</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+<nav><b>dmytro<span>@</span>infra:~$</b><ul><li><a href="#pipeline">CI/CD</a></li><li><a href="#iac">IaC</a></li><li><a href="#cloud">Cloud</a></li><li><a href="#dr">DR</a></li><li><a href="#skills">Skills</a></li><li><a href="#exp">Experience</a></li><li><a href="#contact">Contact</a></li></ul></nav>
 
 <header class="hero">
  <div>
   <div class="badge"><i></i>Open to remote roles</div>
-  <h1>Dmytro<br><em>Savchenko</em></h1>
+  <div class="sun"><h1>Dmytro<br><em>Savchenko</em></h1>
   <p class="role">Infrastructure Engineer / DevOps Engineer</p>
-  <p class="lead">4.5+ years building Linux infrastructure that stays up. IaC, CI/CD, containers, AWS &amp; GCP and cross-datacenter Disaster Recovery. Try the terminal →</p>
+  <p class="lead">4.5+ years building Linux infrastructure that stays up. IaC, CI/CD, containers, AWS &amp; GCP and cross-datacenter Disaster Recovery. Try the terminal →</p></div>
   <div class="btns"><a class="btn pri" href="#contact">Get in touch</a><a class="btn" href="#iac">Play with IaC</a></div>
  </div>
  <div class="term"><div class="tb"><b></b><b></b><b></b><span>interactive shell</span></div>
@@ -73,6 +81,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:40px 0}
   <div class="ti"><span class="pr">❯</span><input id="ti" autocomplete="off" spellcheck="false" placeholder="type a command..." aria-label="terminal input"></div>
   <div class="hint" id="hint"></div></div>
 </header>
+
+<section id="pipeline" class="rv"><div class="lab">CI/CD</div><h2>From commit to production</h2>
+ <p class="sub">A change travels through the same tools I use every day. Run it, break it, or click any stage.</p>
+ <div class="card"><div class="plw"><div class="plin"><div class="track"><b id="pf"></b><i id="pp"></i></div><div class="pl" id="pl"></div></div></div>
+  <div class="pllog" id="plog">Press ▶ Run pipeline, or click a stage.</div>
+  <div class="row"><span class="note">Tip: "Break tests" shows a failed pipeline stopping before deploy.</span><span><button class="btn pri" id="prun">▶ Run pipeline</button> <button class="btn" id="pfail">🧪 Break tests</button></span></div></div>
+</section>
 
 <section id="iac" class="rv"><div class="lab">Infrastructure as Code</div><h2>One goal, four tools</h2>
  <p class="sub">The same task — "web server with nginx" — in each config-management / IaC tool. Pick one and hit Run.</p>
@@ -186,6 +201,19 @@ function dr(dead){$("d1").className="dc"+(dead?" dead":"");$("s1").textContent=d
  $("dlog").textContent=dead?"DC-1 down → DB replica promoted, traffic switched to DC-2. Zero manual steps.":"All systems healthy.";
  $("fl").style.transform=dead?"scaleX(-1)":""}
 $("kill").onclick=function(){dr(1)};$("heal").onclick=function(){dr(0)};
+
+// ---- pipeline
+var PL=[["🌿","Git","push to main","git push → webhook fires, pipeline starts."],["⚙️","Actions","lint & test","GitHub Actions runs linters and tests on every push."],["🐳","Docker","build image","Image built, tagged and pushed to the registry."],["🏗️","Terraform","plan & apply","Terraform plans and creates cloud resources (buckets, VMs, networks)."],["📜","Ansible","configure","Ansible playbooks configure servers, secrets via Vault."],["☁️","AWS / GCP","deploy","Docker Swarm rolls out the new version, zero downtime."],["📈","Prometheus","monitor","Prometheus + Grafana watch metrics and alert on problems."]];
+var pt=null,pbusy=false;
+function pdraw(pos,bad){var el=$("pl").children;for(var i=0;i<el.length;i++)el[i].className="stg"+(bad&&i===pos?" bad":i<pos?" done":i===pos?" on":"");
+ var p=pos<0?0:(pos+.5)/7*100;$("pp").style.left=p+"%";$("pf").style.width=p+"%";$("pp").style.background=bad?"#ef4444":""}
+PL.forEach(function(x,i){var b=document.createElement("button");b.className="stg";b.innerHTML='<span class="ic">'+x[0]+'</span><b>'+x[1]+'</b><small>'+x[2]+'</small>';
+ b.onclick=function(){if(pbusy)return;pdraw(i);$("plog").textContent=x[1]+" — "+x[3]}; $("pl").appendChild(b)});
+function prun(fail){if(pbusy)return;pbusy=true;var i=-1;$("plog").textContent="";pdraw(-1);
+ pt=setInterval(function(){i++;if(i>=PL.length){clearInterval(pt);pbusy=false;pdraw(PL.length);$("plog").textContent+="\n✔ Release live. All checks green.";return}
+  if(fail&&i===1){clearInterval(pt);pbusy=false;pdraw(1,1);$("plog").textContent+="✖ Tests failed → pipeline stopped. Nothing was deployed, production is safe.";return}
+  pdraw(i);$("plog").textContent+="▸ "+PL[i][1]+": "+PL[i][3]+"\n"},1000)}
+$("prun").onclick=function(){prun(0)};$("pfail").onclick=function(){prun(1)};pdraw(-1);
 // ---- reveal
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1});
 document.querySelectorAll(".rv").forEach(function(e){io.observe(e)});$("yr").textContent=new Date().getFullYear();
