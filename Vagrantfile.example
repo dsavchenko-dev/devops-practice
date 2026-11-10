@@ -1,0 +1,28 @@
+# Example local lab. Usage:
+#   cp Vagrantfile.example Vagrantfile   (your own Vagrantfile is git-ignored)
+#   vagrant up             create the VMs
+#   vagrant halt           shut them down
+#   vagrant destroy -f     wipe everything and start clean
+# Boxes can be replaced; check names on app.vagrantup.com.
+
+MACHINES = {
+  "vg-debian" => { box: "bento/debian-13",    ip: "192.168.56.11" },
+  "vg-ubuntu" => { box: "bento/ubuntu-26.04", ip: "192.168.56.12" },
+}
+
+Vagrant.configure("2") do |config|
+  MACHINES.each do |name, m|
+    config.vm.define name do |node|
+      node.vm.box = m[:box]
+      node.vm.hostname = name
+      # VirtualBox host-only network: the IP must belong to your range
+      # (check with: VBoxManage list hostonlyifs)
+      node.vm.network "private_network", ip: m[:ip]
+      node.vm.provider "virtualbox" do |vb|
+        vb.name   = name
+        vb.cpus   = 1
+        vb.memory = 1024
+      end
+    end
+  end
+end

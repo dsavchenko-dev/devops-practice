@@ -22,3 +22,6 @@ crash.log
 # Особисті налаштування Claude
 CLAUDE.local.md
 .claude/settings.local.json
+Vagrantfile
+.vagrant/
+ansible/inventory.vagrant.ini
