@@ -1,0 +1,17 @@
+---
+- name: Which one needs restarting
+  hosts: lab
+  become: true
+
+  tasks:
+    - name: Check which services need a restart
+      ansible.builtin.command:
+        cmd: needrestart -b
+      register: needs_restarting
+      changed_when: false
+      when: ansible_facts['distribution'] == 'Ubuntu'
+    - name: Debug message
+      ansible.builtin.debug:
+        msg: "{{ needs_restarting.stdout_lines }}"
+      when: needs_restarting is not skipped
+
