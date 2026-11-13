@@ -14,4 +14,3 @@
       ansible.builtin.debug:
         msg: "{{ needs_restarting.stdout_lines }}"
       when: needs_restarting is not skipped
-
