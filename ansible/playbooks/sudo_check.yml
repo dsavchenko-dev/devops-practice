@@ -1,0 +1,19 @@
+---
+- name: Sudo check
+  hosts: lab
+  vars:
+    sudo_rs_min_version: "25.10"
+
+  tasks:
+    - name: Retrieve sudo ws stats
+      ansible.builtin.stat:
+        path: /usr/bin/sudo.ws
+      register: sudo_ws
+    - name: Show sudo.ws state on Ubuntu 25.10+
+      ansible.builtin.debug:
+        msg: "Host {{ inventory_hostname }} - Sudo stats exists: {{ sudo_ws.stat.exists }}"
+      when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_version'] is version(sudo_rs_min_version, '>=')
+    - name: Report hosts without sudo-rs
+      ansible.builtin.debug:
+        msg: "Host {{ inventory_hostname }} - not Ubuntu 25.10+, sudo-rs not expected"
+      when: not (ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_version'] is version(sudo_rs_min_version, '>='))
