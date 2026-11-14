@@ -1,0 +1,7 @@
+---
+- name: Configure sshd via role
+  hosts: lab
+  become: true
+
+  roles:
+    - sshd
