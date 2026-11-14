@@ -1,0 +1,5 @@
+---
+# Ubuntu 25.10+ ships sudo-rs, whose password prompt Ansible does not recognise.
+# The classic sudo stays available as sudo.ws (see docs/DECISIONS.md, D-014).
+# Applies to the "vms" group only: Debian hosts have no sudo.ws.
+ansible_become_exe: sudo.ws
