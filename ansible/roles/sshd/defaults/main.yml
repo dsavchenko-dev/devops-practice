@@ -1,3 +1,6 @@
 ---
 # Seconds the server waits for a login before dropping the connection.
 sshd_login_grace_time: 40
+
+# Authentication attempts allowed per connection.
+sshd_max_auth_tries: 4

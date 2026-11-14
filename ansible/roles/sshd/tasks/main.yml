@@ -1,7 +1,7 @@
 ---
-- name: Set LoginGraceTime
-  ansible.builtin.copy:
-    content: "LoginGraceTime {{ sshd_login_grace_time }}\n"
+- name: Deploy sshd drop-in config
+  ansible.builtin.template:
+    src: lab.conf.j2
     dest: /etc/ssh/sshd_config.d/lab.conf
     mode: "0644"
     validate: /usr/sbin/sshd -t -f %s
