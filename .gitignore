@@ -28,3 +28,6 @@ ansible/inventory.vagrant.ini
 
 #ansible vault pass
 .vault*
+
+# Ansible collections (restore with requirements.yml)
+ansible/collections/
