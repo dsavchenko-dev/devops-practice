@@ -4,7 +4,7 @@
 # Applies to the "vms" group only: Debian hosts have no sudo.ws.
 ansible_become_exe: sudo.ws
 
-#root password
+# Become (sudo) password, encrypted with ansible-vault.
 ansible_become_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           63313839323434623062396234646432393466613339306138313532633934363436396432356132
